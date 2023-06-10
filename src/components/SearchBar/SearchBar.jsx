@@ -1,7 +1,6 @@
 import { Component } from 'react';
 import { FaSearch } from 'react-icons/fa';
 
-import { Formik } from 'formik';
 import {
   StyledHeader,
   StyledSearchForm,
@@ -10,39 +9,39 @@ import {
 } from './SearchBarStyled';
 
 export class SearchBar extends Component {
-  state = {};
+  state = {
+    value: '',
+  };
 
-  handleSubmit = (values, { resetForm }) => {
-    console.log('data for form', values);
-    resetForm();
+  handlerChangeQuery = event => {
+    this.setState({ value: event.target.value });
+  };
+
+  handlerSubmitForm = event => {
+    event.preventDefault();
+    this.props.onSubmit(this.state.value);
+    this.setState({ value: '' });
   };
 
   render() {
     return (
       <StyledHeader>
-        <Formik
-          initialValues={{
-            search: '',
-          }}
-          onSubmit={this.handleSubmit}
-        >
-          <StyledSearchForm>
-            <StyledSearchBtn type="submit">
-              <FaSearch />
-            </StyledSearchBtn>
+        <StyledSearchForm onSubmit={this.handlerSubmitForm}>
+          <StyledSearchBtn type="submit">
+            <FaSearch />
+          </StyledSearchBtn>
 
-            <StyledSearchInput
-              name="search"
-              type="text"
-              autoComplete="off"
-              autoFocus
-              placeholder="Search images and photos"
-            />
-          </StyledSearchForm>
-        </Formik>
+          <StyledSearchInput
+            name="search"
+            type="text"
+            autoComplete="off"
+            autoFocus
+            placeholder="Search images and photos"
+            onChange={this.handlerChangeQuery}
+            value={this.state.value}
+          />
+        </StyledSearchForm>
       </StyledHeader>
     );
   }
 }
-
-// export default SearchBar;
