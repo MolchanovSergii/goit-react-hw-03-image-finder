@@ -1,4 +1,7 @@
 import { Component } from 'react';
+import { FaSearch } from 'react-icons/fa';
+
+import { Formik } from 'formik';
 import {
   StyledHeader,
   StyledSearchForm,
@@ -8,21 +11,35 @@ import {
 
 export class SearchBar extends Component {
   state = {};
+
+  handleSubmit = (values, { resetForm }) => {
+    console.log('data for form', values);
+    resetForm();
+  };
+
   render() {
     return (
       <StyledHeader>
-        <StyledSearchForm>
-          <StyledSearchBtn type="submit">
-            {/* <span class="button-label">Search</span> */}
-          </StyledSearchBtn>
+        <Formik
+          initialValues={{
+            search: '',
+          }}
+          onSubmit={this.handleSubmit}
+        >
+          <StyledSearchForm>
+            <StyledSearchBtn type="submit">
+              <FaSearch />
+            </StyledSearchBtn>
 
-          <StyledSearchInput
-            type="text"
-            autocomplete="off"
-            autofocus
-            placeholder="Search images and photos"
-          />
-        </StyledSearchForm>
+            <StyledSearchInput
+              name="search"
+              type="text"
+              autoComplete="off"
+              autoFocus
+              placeholder="Search images and photos"
+            />
+          </StyledSearchForm>
+        </Formik>
       </StyledHeader>
     );
   }
