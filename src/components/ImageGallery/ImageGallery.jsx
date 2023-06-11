@@ -27,12 +27,14 @@ class ImageGallery extends Component {
     this.setState({
       selectedImage: image,
     });
+    document.body.classList.add('modal-open');
   };
 
   closeModal = () => {
     this.setState({
       selectedImage: null,
     });
+    document.body.classList.remove('modal-open');
   };
 
   handleKeyDown = event => {
