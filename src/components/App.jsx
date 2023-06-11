@@ -53,6 +53,10 @@ export class App extends Component {
 
   handleIncreasePage = () => {
     this.setState(prevState => ({ page: prevState.page + 1 }));
+    window.scrollBy({
+      top: 300 * 2,
+      behavior: 'smooth',
+    });
   };
 
   resetState = () => {
