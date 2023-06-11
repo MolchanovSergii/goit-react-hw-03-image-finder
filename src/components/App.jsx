@@ -38,7 +38,7 @@ export class App extends Component {
         });
       } catch (error) {
         this.setState({ isLoading: false });
-        Notify.failure(`Sorry something went wrong. ${error.message}`);
+        Notify.failure(`Sorry something  went wrong. ${error.message}`);
       }
     }
   }
