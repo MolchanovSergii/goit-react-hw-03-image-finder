@@ -42,6 +42,14 @@ export const OverlayStyled = styled.div`
 `;
 
 export const ModalStyled = styled.div`
+  /* max-width: calc(100vw - 48px);
+  max-height: calc(100vh - 24px); */
+  background-сolor: transparent;
   max-width: calc(100vw - 48px);
   max-height: calc(100vh - 24px);
+  padding: 0;
+  border: none;
+  position: static;
+  border-radius: 0;
+  overflow: hidden;
 `;

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import {
   StyledImageGallery,
   StyledImageGalleryItem,
@@ -13,6 +14,14 @@ class ImageGallery extends Component {
   };
 
   images = this.props.images;
+
+  componentDidMount() {
+    document.addEventListener('keydown', this.handleKeyDown);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleKeyDown);
+  }
 
   openModal = image => {
     this.setState({
@@ -57,7 +66,7 @@ class ImageGallery extends Component {
             onKeyDown={this.handleKeyDown}
             tabIndex={0}
           >
-            <ModalStyled>
+            <ModalStyled id="modal">
               <img src={selectedImage.largeImageURL} alt={selectedImage.tags} />
             </ModalStyled>
           </OverlayStyled>
