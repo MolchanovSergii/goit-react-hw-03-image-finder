@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import fetchApi from '../../src/services/fetchApi';
 import { StyledApp } from './AppStyled';
@@ -26,18 +27,27 @@ export class App extends Component {
 
       try {
         const fetchImage = await fetchApi(query, page);
-
+        if (!fetchImage.hits.length) {
+          Notify.warning(
+            'No results were found for your search, please try something else.'
+          );
+        }
         this.setState({
           images: [...images, ...fetchImage.hits],
           isLoading: false,
         });
       } catch (error) {
         this.setState({ isLoading: false });
+        Notify.failure(`Sorry something went wrong. ${error.message}`);
       }
     }
   }
 
   handleSubmit = value => {
+    if (this.state.query === value) {
+      return;
+    }
+    this.resetState();
     this.setState({ query: value });
   };
 
@@ -45,18 +55,21 @@ export class App extends Component {
     this.setState(prevState => ({ page: prevState.page + 1 }));
   };
 
+  resetState = () => {
+    this.setState(this.initialState);
+  };
+
   render() {
+    const { images, isLoading } = this.state;
     return (
       <>
         <StyledApp>
           <SearchBar onSubmit={this.handleSubmit} />
-          {this.state.isLoading ? (
-            <Loader />
-          ) : (
-            <ImageGallery images={this.state.images} />
-          )}
+          {isLoading ? <Loader /> : <ImageGallery images={this.state.images} />}
 
-          <LoadMoreButton onClick={this.handleIncreasePage} />
+          {images.length > 0 && images.length !== this.totalHits && (
+            <LoadMoreButton onClick={this.handleIncreasePage} />
+          )}
         </StyledApp>
       </>
     );
