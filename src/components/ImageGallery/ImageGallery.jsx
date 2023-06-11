@@ -68,7 +68,7 @@ class ImageGallery extends Component {
             onKeyDown={this.handleKeyDown}
             tabIndex={0}
           >
-            <ModalStyled id="modal">
+            <ModalStyled>
               <img src={selectedImage.largeImageURL} alt={selectedImage.tags} />
             </ModalStyled>
           </OverlayStyled>
