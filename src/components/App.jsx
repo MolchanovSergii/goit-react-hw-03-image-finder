@@ -15,6 +15,7 @@ export class App extends Component {
     images: [],
     isLoading: false,
     isEmpty: false,
+    fetchImageLength: 0,
   };
 
   state = { ...this.initialState };
@@ -27,6 +28,7 @@ export class App extends Component {
 
       try {
         const fetchImage = await fetchApi(query, page);
+        console.log('fetchImage.hits.length :', fetchImage.hits.length);
         if (!fetchImage.hits.length) {
           Notify.warning(
             'No results were found for your search, please try something else.'
@@ -35,6 +37,7 @@ export class App extends Component {
         this.setState({
           images: [...images, ...fetchImage.hits],
           isLoading: false,
+          fetchImageLength: fetchImage.hits.length,
         });
       } catch (error) {
         this.setState({ isLoading: false });
@@ -54,7 +57,7 @@ export class App extends Component {
   handleIncreasePage = () => {
     this.setState(prevState => ({ page: prevState.page + 1 }));
     window.scrollBy({
-      top: 300 * 2,
+      top: 300 * 3,
       behavior: 'smooth',
     });
   };
@@ -64,14 +67,14 @@ export class App extends Component {
   };
 
   render() {
-    const { images, isLoading } = this.state;
+    const { images, isLoading, fetchImageLength } = this.state;
     return (
       <>
         <StyledApp>
           <SearchBar onSubmit={this.handleSubmit} />
           {isLoading ? <Loader /> : <ImageGallery images={this.state.images} />}
 
-          {images.length > 0 && images.length !== this.totalHits && (
+          {images.length > 0 && fetchImageLength === 12 && (
             <LoadMoreButton onClick={this.handleIncreasePage} />
           )}
         </StyledApp>
