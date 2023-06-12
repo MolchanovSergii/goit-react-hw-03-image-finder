@@ -28,7 +28,6 @@ export class App extends Component {
 
       try {
         const fetchImage = await fetchApi(query, page);
-        console.log('fetchImage.hits.length :', fetchImage.hits.length);
         if (!fetchImage.hits.length) {
           Notify.warning(
             'No results were found for your search, please try something else.'

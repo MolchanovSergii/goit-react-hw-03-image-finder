@@ -5,9 +5,9 @@ import {
   StyledImageGallery,
   StyledImageGalleryItem,
   StyledItemImage,
-  OverlayStyled,
-  ModalStyled,
 } from './ImageGalleryStyled';
+
+import Modal from 'components/Modal/Modal';
 
 class ImageGallery extends Component {
   state = {
@@ -64,15 +64,12 @@ class ImageGallery extends Component {
         </StyledImageGallery>
 
         {selectedImage && (
-          <OverlayStyled
-            onClick={this.closeModal}
+          <Modal
+            imgURL={selectedImage.largeImageURL}
+            alt={selectedImage.tags}
+            closeModal={this.closeModal}
             onKeyDown={this.handleKeyDown}
-            tabIndex={0}
-          >
-            <ModalStyled>
-              <img src={selectedImage.largeImageURL} alt={selectedImage.tags} />
-            </ModalStyled>
-          </OverlayStyled>
+          />
         )}
       </div>
     );
